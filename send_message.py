@@ -23,21 +23,23 @@ def send_server_chan(sckey, title, desp):
         logging.warning("server酱 KEY 没有配置,不推送消息")
 
 
-def send_pushplus(pushplus_key, title, message):
-    """
-    pushplus 推送
-    :param pushplus_key: pushplus的token
-    :param title: 标题
-    :param message: 内容
-    :return:
-    """
-    if pushplus_key:
-        url = "http://www.pushplus.plus/send"
-        data = {"token": pushplus_key, "title": title, "content": message}
-        response = requests.post(url, data=data)
-        if response.json()['code'] == 200:
-            logging.info('PushPlus推送成功')
-        else:
-            logging.info('PushPlus推送失败')
-    else:
-        logging.warning("PUSHPLUS_KEY 没有配置,不推送消息")
+def send_pushplus(token, title, content):
+    if token is None:
+        logging.warning("pushplus TOKEN 没有配置,不推送消息")
+        return
+    
+    url = 'http://www.pushplus.plus/send'
+    data = {
+        "token": token,
+        "title": title,
+        "content": content
+    }
+    
+    try:
+        # 添加超时参数，设置连接超时和读取超时均为5秒
+        response = requests.post(url, data=data, timeout=(5, 5))
+        logging.info(f'pushplus 通知推送结果：{response.status_code, response.text}')
+    except requests.exceptions.Timeout:
+        logging.error("pushplus 推送服务请求超时")
+    except Exception as e:
+        logging.error(f"pushplus 推送失败: {e}")
