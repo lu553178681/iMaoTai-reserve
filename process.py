@@ -286,7 +286,7 @@ def select_geo(i: str):
     return geocodes
 
 
-def get_map(lat: str = '28.499562', lng: str = '102.182324'):
+def get_map(lat: str, lng: str):
     p_c_map = {}
     url = 'https://static.moutai519.com.cn/mt-backend/xhr/front/mall/resource/get'
     headers = {

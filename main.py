@@ -31,7 +31,7 @@ if len(configs.sections()) == 0:
 
 aes_key = privateCrypt.get_aes_key()
 
-s_title = '茅台预约成功'
+s_title = '【成功】茅台预约成功'
 s_content = ""
 
 for section in configs.sections():
@@ -72,7 +72,7 @@ for section in configs.sections():
             r_success, r_content = process.reservation(reservation_params, mobile)
             # 为了防止漏掉推送异常，所有只要有一个异常，标题就显示失败
             if not r_success:
-                s_title = '！！失败！！茅台预约'
+                s_title = '【失败】茅台预约'
             s_content = s_content + r_content + shopInfo + "\n"
             # 领取小茅运和耐力值
             process.getUserEnergyAward(mobile)
