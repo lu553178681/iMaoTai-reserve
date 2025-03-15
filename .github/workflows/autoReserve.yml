@@ -12,7 +12,7 @@ on:
     - cron: '15 09 * * *'
 
 env:
-  TZ: Asia/Shanghai
+  TZ: 'Asia/Shanghai'
 
 permissions:
   contents: read
